@@ -1,0 +1,20 @@
+export const ADD_TO_CART = "ADD_TO_CART";
+export const ADD_TO_CART_ERROR = "ADD_TO_CART_ERROR";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const REMOVE_FROM_CART_ERROR = "REMOVE_FROM_CART_ERROR";
+export const INCREASE_QTY = "INCREASE_QTY";
+export const DECREASE_QTY = "DECREASE_QTY";
+export const LOAD_CURRENT_ITEM = "LOAD_CURRENT_ITEM";
+export const CREATE_PROJECT = "CREATE_PROJECT";
+export const CREATE_ERROR = "CREATE_ERROR";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_ERROR1 = "LOGIN_ERROR1";
+export const ITEM_DETAILS = "ITEM_DETAILS";
+export const ITEM_DETAILS_ERROR = "ITEM_DETAILS_ERROR";
+
+export const SHOW_CART = "SHOW_CART";
+export const ADD_ITEM = "ADD_ITEM";
+export const DELETE_ITEM = "DELETE_ITEM";
+export const UPDATE_PRICE = "UPDATE_PRICE";
+export const DECREMENT_QTY = "DECREMENT_QTY";
+export const SET_SORT_TYPE = "SET_SORT_TYPE";
