@@ -20,6 +20,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import ReadMore from "react-native-read-more-text";
+import { addToCart } from "../globalStates/actions/cartActions";
 
 function Main({ navigation, route }) {
   const [qty, setQty] = useState(1);
@@ -27,6 +28,7 @@ function Main({ navigation, route }) {
   const { data } = route.params;
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
+
   const { loading, error, product } = productDetails;
 
   const [colors, setColors] = useState(false);
@@ -35,7 +37,7 @@ function Main({ navigation, route }) {
   };
   useEffect(() => {
     dispatch(listProductDetails(data._id));
-  }, [dispatch]);
+  }, [dispatch, data._id]);
 
   return (
     <View style={styles.container}>
@@ -125,7 +127,10 @@ function Main({ navigation, route }) {
               <View style={styles.productDetailsIcon}>
                 <TouchableOpacity
                   disabled={product.countInStock === qty}
-                  onPress={() => setQty(qty + 1)}
+                  onPress={() => {
+                    setQty(qty + 1);
+                    dispatch(addToCart(product._id, qty));
+                  }}
                 >
                   <AntDesign
                     name="plus"
@@ -166,7 +171,10 @@ function Main({ navigation, route }) {
                 />
               </TouchableWithoutFeedback>
               <TouchableOpacity
-                onPress={() => navigation.navigate("cart", { qty })}
+                onPress={() => {
+                  setQty(qty + 1);
+                  navigation.navigate("cart", { qty });
+                }}
                 style={styles.addToCartButton}
               >
                 <Text style={styles.addToCartText}>View Cart</Text>

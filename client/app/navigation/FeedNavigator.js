@@ -17,7 +17,7 @@ import Setting from "../components/Setting";
 import Main from "../components/Main";
 import Cart from "../components/Cart";
 import Category from "../components/Category";
-import { SecondHeader } from "../components/TopBar";
+import { Header, SecondHeader } from "../components/TopBar";
 import Products from "../components/Products";
 
 const Stack = createStackNavigator();
@@ -63,6 +63,11 @@ const FeedNavigator = () => {
         options={{ headerBackTitle: "", headerShown: false }}
         name="setting"
         component={Setting}
+      />
+      <Stack.Screen
+        options={{ headerBackTitle: "", headerShown: false }}
+        name="header"
+        component={Header}
       />
 
       {/* <Stack.Screen

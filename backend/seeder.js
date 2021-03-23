@@ -8,8 +8,8 @@ const Product = require("./models/ProductModel");
 const Order = require("./models/OrderModel");
 const connectDB = require("./config/db");
 
-// Run dotenv
-dotenv.config();
+// // Run dotenv
+// dotenv.config();
 
 //Run connectDb
 connectDB();
@@ -17,9 +17,9 @@ connectDB();
 //import data
 const importData = async () => {
   try {
-    // await Product.deleteMany();
-    // await User.deleteMany();
-    // await Order.deleteMany();
+    await Product.deleteMany();
+    await User.deleteMany();
+    await Order.deleteMany();
 
     const createdUser = await User.insertMany(users);
     const adminUser = createdUser[0]._id;

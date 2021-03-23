@@ -10,12 +10,12 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import color from "../config/color";
-const Header = ({ navigation, onPress }) => {
+const Header = ({ navigation, onPress, onClick }) => {
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.cartNum}>12</Text>
       <View style={styles.header}>
-        <TouchableWithoutFeedback onPress={onPress}>
+        <TouchableWithoutFeedback>
           <MaterialCommunityIcons
             style={styles.headerIcon}
             name="segment"
@@ -25,12 +25,14 @@ const Header = ({ navigation, onPress }) => {
         </TouchableWithoutFeedback>
 
         <Text style={styles.headerText}>My Shopping</Text>
-        <MaterialCommunityIcons
-          style={styles.headerIcon}
-          name="cart"
-          color={color.newdarkgreen}
-          size={28}
-        />
+        <TouchableWithoutFeedback onPress={onPress}>
+          <MaterialCommunityIcons
+            style={styles.headerIcon}
+            name="cart"
+            color={color.newdarkgreen}
+            size={28}
+          />
+        </TouchableWithoutFeedback>
       </View>
     </View>
   );

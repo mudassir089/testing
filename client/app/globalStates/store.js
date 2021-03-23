@@ -6,19 +6,20 @@ import {
   productDetailsReducer,
 } from "./reducers/productReducers";
 import AsyncStorage from "@react-native-community/async-storage";
-
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
 });
 
-const cartItemsFromStorage = AsyncStorage.getItem("cartItems")
-  ? AsyncStorage.getItem("cartItems")
-  : [];
+const cartItemsFromStorage = () => {
+  AsyncStorage.getItem("cartItems")
+    ? JSON.parse(AsyncStorage.getItem("cartItems"))
+    : [];
+};
 
 const initialState = {
-  cart: { cartItems: cartItemsFromStorage },
+  // cart: { cartItems: cartItemsFromStorage },
 };
 
 const middleware = [thunk];

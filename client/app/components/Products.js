@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,8 +18,11 @@ import color from "../config/color";
 import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../globalStates/actions/productActions";
+import { addToCart } from "../globalStates/actions/cartActions";
 
-function Products({ navigation, route, addToCart }) {
+function Products({ navigation, route }) {
+  const [qty, setQty] = useState(1);
+
   const { categoryName } = route.params;
 
   // const handleAddToCart = (product) => {
@@ -28,16 +31,25 @@ function Products({ navigation, route, addToCart }) {
   //   console.log(addToCart(product));
   // };
 
-  const disptch = useDispatch();
+  const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { error, loading, products } = productList;
 
   useEffect(() => {
-    disptch(listProducts());
-  }, [disptch]);
+    dispatch(listProducts());
+  }, [dispatch]);
+
+  // const addItem = () => {
+  //   setQty(qty + 1);
+  //   navigation.navigate("cart", { id: products });
+  // };
   return (
     <>
-      <Header onPress={() => navigation.toggleDrawer()} />
+      <Header
+        onPress={() => {
+          navigation.navigate("cart");
+        }}
+      />
       <Search />
       <View style={{ borderWidth: 0.5, borderColor: "lightgrey" }}></View>
       {loading ? (
@@ -65,7 +77,7 @@ function Products({ navigation, route, addToCart }) {
               }
               numColumns={2}
               showsVerticalScrollIndicator={false}
-              keyExtractor={(item) => item._id}
+              keyExtractor={(item) => item._id.toString()}
               renderItem={({ item }) => {
                 return (
                   <>
@@ -97,7 +109,11 @@ function Products({ navigation, route, addToCart }) {
 
                             <TouchableOpacity
                               // style={{ marginLeft: 40 }}
-                              onPress={() => console.log.log("poka")}
+
+                              onPress={() => {
+                                setQty(qty + 1);
+                                dispatch(addToCart(item._id, qty));
+                              }}
                             >
                               <MaterialCommunityIcons
                                 name="cart"

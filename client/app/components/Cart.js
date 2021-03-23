@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../actions/cartActions";
+import { addToCart } from "../globalStates/actions/cartActions";
 import {
   View,
   Text,
@@ -14,14 +14,12 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 import color from "../config/color";
-import { topProducts } from "./Data";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import { firestoreConnect } from "react-redux-firebase";
+import Loader from "./Loader";
 
-function Cart({ navigation, CartItems, route }) {
-  const { qty } = route.params;
-  console.log(CartItems);
+function Cart({ navigation, route }) {
+  const cart = useSelector((state) => state.cart);
+  const { cartItems, loading } = cart;
+
   return (
     <View style={styles.container}>
       <View style={styles.cartHeaderCon}>
@@ -37,9 +35,9 @@ function Cart({ navigation, CartItems, route }) {
       <View style={styles.borderLine}></View>
 
       <FlatList
-        data={CartItems}
+        data={cartItems}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => item.id.id.toString()}
+        keyExtractor={(item, index) => item.product.toString()}
         renderItem={({ item }) => {
           return (
             <>
@@ -47,12 +45,12 @@ function Cart({ navigation, CartItems, route }) {
                 <View style={styles.cartListwrap}>
                   <Image
                     resizeMode="cover"
-                    source={item.id.image}
+                    source={{ uri: item.image }}
                     style={styles.cartImg}
                   />
                   <View style={styles.cartIconCon}>
                     <Text numberOfLines={2} style={styles.cartLabel}>
-                      {item.id.label}
+                      {item.name}
                     </Text>
                     <View style={styles.productDetailsIcon}>
                       <TouchableWithoutFeedback
@@ -88,7 +86,7 @@ function Cart({ navigation, CartItems, route }) {
                         size={28}
                       />
                     </TouchableWithoutFeedback>
-                    <Text style={styles.cartPrice}>Rs.{item.id.price}.95</Text>
+                    <Text style={styles.cartPrice}>Rs.{item.price}.95</Text>
                   </View>
                 </View>
               </View>
@@ -96,6 +94,7 @@ function Cart({ navigation, CartItems, route }) {
           );
         }}
       />
+
       <View style={styles.borderLine}></View>
       <View style={styles.cartDeleveryCon}>
         <Text style={styles.cartDeleveryText}>Delevery</Text>
@@ -238,12 +237,5 @@ const styles = StyleSheet.create({
     color: color.newgreen,
   },
 });
-const mapStateToProps = (state) => {
-  console.log();
-  return {
-    // CartItems: state.firestore.ordered.CartItems,
-    CartItems: state.cart.cartItems,
-  };
-};
 
-export default connect(mapStateToProps)(Cart);
+export default Cart;
